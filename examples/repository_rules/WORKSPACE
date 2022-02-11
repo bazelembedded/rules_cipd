@@ -1,0 +1,30 @@
+# Replace this with git_repository pointing at rules_cipd.
+local_repository(
+    name = "rules_cipd",
+    path = "../..",
+)
+
+load("@rules_cipd//:cipd_deps.bzl", "cipd_deps")
+
+cipd_deps()
+
+# Pull in your dependencies from cipd.
+load("@rules_cipd//cipd:defs.bzl", "cipd_package")
+
+cipd_package(
+    name = "python_linux",
+    id = "AeeBYkh7rr_sc3IQS1y5D5qzcdtq4yTTqJO6_SiYnvEC",
+    path = "infra/python/cpython3/linux-amd64",
+)
+
+cipd_package(
+    name = "python_windows",
+    id = "jxpJoQueQw8Wuh1jacFbPkzQbv_V2t43p1FO-DQI2gYC",
+    path = "infra/python/cpython3/windows-amd64",
+)
+
+cipd_package(
+    name = "python_macos",
+    id = "_HcVvC8YBmiLxrI0Q8Gc8AuuhJGci_BCf7kKeuuVEigC",
+    path = "infra/python/cpython3/mac-amd64",
+)

@@ -1,0 +1,23 @@
+filegroup(
+    name = "bazel_repo",
+    srcs = [
+        "defs.bzl",
+        "//cipd/internal:bazel_repo",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "bazel_module",
+    srcs = [
+        "modules.bzl",
+        ":bazel_repo",
+        "//cipd/internal:bazel_module",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+exports_files([
+    "defs.bzl",
+    "modules.bzl",
+])

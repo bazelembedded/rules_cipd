@@ -1,0 +1,23 @@
+filegroup(
+    name = "bazel_repo",
+    srcs = glob(
+        ["*.bzl"],
+        exclude = ["cipd_modules.bzl"],
+    ),
+    visibility = ["//cipd:__pkg__"],
+)
+
+filegroup(
+    name = "bazel_module",
+    srcs = [
+        "cipd_modules.bzl",
+        ":bazel_repo",
+    ],
+    visibility = ["//cipd:__pkg__"],
+)
+
+# See, //:WORKSPACE or //:MODULE.bazel and :test.BUILD for more info.
+filegroup(
+    name = "test_custom_build_file",
+    srcs = ["@python_linux_arm_custom_build//:test_target_for_custom_build"],
+)

@@ -1,0 +1,30 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@io_bazel_stardoc//stardoc:stardoc.bzl", "stardoc")
+
+# TODO(bazelbuild/stardoc#123): Combine this with bzl_module target.
+bzl_library(
+    name = "bzl_repo",
+    srcs = ["//cipd:bazel_repo"],
+)
+
+bzl_library(
+    name = "bzl_module",
+    srcs = ["//cipd:bazel_module"],
+)
+
+stardoc(
+    name = "module_doc",
+    out = "module_doc.md",
+    input = "//cipd:modules.bzl",
+    # TODO(bazelbuild/stardoc#123): Delete manual tag once stardoc supports
+    # bzlmod.
+    tags = ["manual"],
+    deps = [":bzl_module"],
+)
+
+stardoc(
+    name = "repo_doc",
+    out = "repo_doc.md",
+    input = "//cipd:defs.bzl",
+    deps = [":bzl_repo"],
+)

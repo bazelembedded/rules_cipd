@@ -1,0 +1,16 @@
+load("@bazel_skylib//rules:native_binary.bzl", "native_test")
+
+# Test that we can fetch and run binaries from CIPD.
+native_test(
+    name = "golang_fetch_and_run_test",
+    src = select({
+        "@platforms//os:linux": "@golang_linux//:bin/go",
+        "@platforms//os:macos": "@golang_macos//:bin/go",
+        "@platforms//os:windows": "@golang_windows//:bin/go.exe",
+    }),
+    out = "golang_test.out",
+    args = [
+        # Just print the help menu this should return 0.
+        "help",
+    ],
+)

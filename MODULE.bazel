@@ -1,0 +1,81 @@
+module(
+    name = "rules_cipd",
+    version = "0.0.1",
+)
+
+bazel_dep(name = "bazel_skylib", version = "1.1.1")
+bazel_dep(name = "platforms", version = "0.0.4")
+
+bazel_dep(
+    name = "stardoc",
+    version = "0.5.0",
+    repo_name = "io_bazel_stardoc",
+    dev_dependency = True,
+)
+
+cipd = use_extension("//cipd/internal:cipd_modules.bzl", "cipd")
+
+cipd.package(
+    path = "pigweed/third_party/bloaty-embedded/linux-amd64",
+    id = "LPWyPw6ocZpqNafCV-Jw3kCCd1RNypIXo0uM0vr73isC",
+)
+
+cipd.package(
+    path = "pigweed/third_party/bloaty-embedded/mac-amd64",
+    id = "A94YZbzQl8NMb47Xzsii34RiSG3C1sd4lRyfvpZwu38C",
+)
+
+cipd.package(
+    path = "infra/python/cpython3/linux-amd64",
+    id = "AeeBYkh7rr_sc3IQS1y5D5qzcdtq4yTTqJO6_SiYnvEC",
+)
+
+cipd.package(
+    path = "infra/python/cpython3/windows-amd64",
+    id = "jxpJoQueQw8Wuh1jacFbPkzQbv_V2t43p1FO-DQI2gYC",
+)
+
+cipd.package(
+    path = "infra/python/cpython3/mac-amd64",
+    id = "_HcVvC8YBmiLxrI0Q8Gc8AuuhJGci_BCf7kKeuuVEigC",
+)
+
+cipd.package(
+    build_file = "@rules_cipd//cipd/internal:test.BUILD",
+    id = "bhIdL_tOKnqsYWH6y5ujiAFXU9y2skm1-d4576KKNukC",
+    path = "infra/python/cpython3/linux-arm64",
+)
+
+cipd.package(
+    id = "XDR3Gu0gOAILzA11I3kMiuBb8zbnSMh03S44qHE5L8wC",
+    path = "infra/go/linux-amd64",
+)
+
+cipd.package(
+    id = "6dX9khGRNBG1-O_LbJRVmbySyRtbca3cM7wDXsGEGkwC",
+    path = "infra/go/windows-amd64",
+)
+
+cipd.package(
+    id = "kvgv0mRRdNwfALY7uGUomKAVw_xyfghUQrl8j_8VOXUC",
+    path = "infra/go/mac-amd64",
+)
+
+use_repo(
+    cipd,
+    # Repositories needed for rules to work correctly.
+    "cipd_client_linux_x86_64",
+    "cipd_client_macos_x86_64",
+    "cipd_client_windows_x86_64",
+    "cipd_client",
+    # Testing repositories.
+    bloaty_macos = "cipd_pigweed_third_party_bloaty_embedded_mac_amd64",
+    bloaty_linux = "cipd_pigweed_third_party_bloaty_embedded_linux_amd64",
+    python_linux = "cipd_infra_python_cpython3_linux_amd64",
+    python_macos = "cipd_infra_python_cpython3_mac_amd64",
+    python_windows = "cipd_infra_python_cpython3_windows_amd64",
+    python_linux_arm_custom_build = "cipd_infra_python_cpython3_linux_arm64",
+    go_linux = "cipd_infra_go_linux_amd64",
+    go_windows = "cipd_infra_go_windows_amd64",
+    go_macos = "cipd_infra_go_macos_amd64",
+)
