@@ -1,2 +1,5 @@
 # Bazel build
 bazel-*
+
+# Release artifacts
+temp
