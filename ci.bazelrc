@@ -1,2 +1,2 @@
-# TODO: Work out a way to get the distribution package to build with bzlmod.
+# TODO(#5): Work out a way to get the distribution package to build with bzlmod.
 common:bzlmod --deleted_packages=distribution

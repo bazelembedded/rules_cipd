@@ -1,5 +1,5 @@
 common:bzlmod --experimental_enable_bzlmod
 build:bzlmod --registry=file://%workspace%/../../../bazel-central-registry
 
-# TODO: Remove this once rules_cipd is merged into the central repository.
+# TODO(#7): Remove this once rules_cipd is merged into the central repository.
 build --registry=https://raw.githubusercontent.com/bazelembedded/bazel-central-registry/main/
