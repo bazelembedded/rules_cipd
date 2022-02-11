@@ -1,3 +1,5 @@
+load("@bazel_skylib//rules:native_binary.bzl", "native_test")
+
 filegroup(
     name = "bazel_repo",
     srcs = [
@@ -17,7 +19,29 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
+filegroup(
+    name = "distribution",
+    srcs = glob(["**/*"]) + ["//cipd/internal:distribution"],
+    visibility = ["//visibility:public"],
+)
+
 exports_files([
     "defs.bzl",
     "modules.bzl",
 ])
+
+# Test that we can fetch and run binaries from CIPD.
+native_test(
+    name = "golang_fetch_and_run_test",
+    size = "small",
+    src = select({
+        "@platforms//os:linux": "@golang_linux//:bin/go",
+        "@platforms//os:macos": "@golang_macos//:bin/go",
+        "@platforms//os:windows": "@golang_windows//:bin/go.exe",
+    }),
+    out = "golang_test.out",
+    args = [
+        # Just print the help menu this should return 0.
+        "help",
+    ],
+)

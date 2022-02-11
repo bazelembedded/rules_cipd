@@ -20,7 +20,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: "/home/runner/.cache/bazel"
-          key: ${{ runner.os }}-bazel
+          key: ${{ runner.os }}- {{ }}bazel
 
       - name: Test
         run: |
@@ -30,10 +30,26 @@ jobs:
         run: |
           bazelisk build  //...
 
+  build_and_test_bzlmod:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, macos-10.15, windows-2019]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Mount bazel cache
+        uses: actions/cache@v2
+        with:
+          path: "/home/runner/.cache/bazel"
+          key: ${{ runner.os }}-bazel
+
+      # TODO: Find out how to make bzlmod build with //distribution/...
       - name: Test bzlmod
         run: |
-          bazelisk test //... --config bzlmod
+          bazelisk test --config bzlmod //... --deleted_packages=distribution
 
-      - name: Buildbzlmod
+      - name: Build bzlmod
         run: |
-          bazelisk build  //... --config bzlmod
+          bazelisk build --config bzlmod //... --deleted_packages=distribution

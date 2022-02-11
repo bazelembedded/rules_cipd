@@ -5,11 +5,13 @@ load("@io_bazel_stardoc//stardoc:stardoc.bzl", "stardoc")
 bzl_library(
     name = "bzl_repo",
     srcs = ["//cipd:bazel_repo"],
+    visibility = ["//visibility:public"],
 )
 
 bzl_library(
     name = "bzl_module",
     srcs = ["//cipd:bazel_module"],
+    visibility = ["//visibility:public"],
 )
 
 stardoc(
@@ -19,6 +21,7 @@ stardoc(
     # TODO(bazelbuild/stardoc#123): Delete manual tag once stardoc supports
     # bzlmod.
     tags = ["manual"],
+    visibility = ["//visibility:public"],
     deps = [":bzl_module"],
 )
 
@@ -26,5 +29,12 @@ stardoc(
     name = "repo_doc",
     out = "repo_doc.md",
     input = "//cipd:defs.bzl",
+    visibility = ["//visibility:public"],
     deps = [":bzl_repo"],
+)
+
+filegroup(
+    name = "distribution",
+    srcs = glob(["**/*"]),
+    visibility = ["//visibility:public"],
 )

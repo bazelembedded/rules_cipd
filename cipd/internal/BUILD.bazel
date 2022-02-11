@@ -16,6 +16,12 @@ filegroup(
     visibility = ["//cipd:__pkg__"],
 )
 
+filegroup(
+    name = "distribution",
+    srcs = glob(["**/*"]),
+    visibility = ["//visibility:public"],
+)
+
 # See, //:WORKSPACE or //:MODULE.bazel and :test.BUILD for more info.
 filegroup(
     name = "test_custom_build_file",
