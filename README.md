@@ -9,15 +9,7 @@ repositories.
 First start of by pulling the dependency into your WORKSPACE.
 ```py
 # //:WORKSPACE
-git_repository(
-    name = "rules_cipd",
-    commit = "<TODO>",
-    remote = ["https://github.com/bazelembedded/rules_cipd.git"],
-)
-
-load("@rules_cipd//:cipd_deps.bzl","cipd_deps")
-
-cipd_deps()
+# Insert setup snippet from the Releases page...
 
 # Pull in your dependencies from cipd.
 load("@rules_cipd//cipd:defs.bzl", "cipd_package")
