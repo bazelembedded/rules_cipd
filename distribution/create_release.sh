@@ -18,9 +18,10 @@ echo "Creating release for version $version"
 
 bazel build //...
 
-gh release create $version --draft \
+gh release create $version \
     --notes-file bazel-bin/distribution/relnotes.txt \
     --target main \
+    --title "Release $version" \
     ./bazel-bin/distribution/rules_cipd-$version.tar.gz
 
 
