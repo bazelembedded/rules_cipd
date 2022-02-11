@@ -1,0 +1,1 @@
+common --registry=https://raw.githubusercontent.com/bazelembedded/bazel-central-registry/main/

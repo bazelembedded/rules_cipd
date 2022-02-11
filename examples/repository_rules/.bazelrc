@@ -1,2 +1,0 @@
-common:bzlmod --experimental_enable_bzlmod
-build:bzlmod --registry=file://%workspace%/../../../bazel-central-registry

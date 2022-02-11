@@ -11,7 +11,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04, macos-10.15, windows-2019]
+        os: [ubuntu-18.04, macos-10.15, windows-2022]
+        config: ["--config bzlmod", ""]
 
     steps:
       - uses: actions/checkout@v2
@@ -24,17 +25,29 @@ jobs:
 
       - name: Test
         run: |
-          bazelisk test //...
+          bazelisk --bazelrc ci.bazelrc test //... ${{matrix.config}}
 
       - name: Build
         run: |
-          bazelisk build  //...
+          bazelisk --bazelrc ci.bazelrc build //... ${{matrix.config}}
 
-  build_and_test_bzlmod:
+
+  example:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04, macos-10.15, windows-2019]
+        # TODO: Determine why this won't work with windows, github actions seems
+        # to ignore the double hyphen.
+        # os: [ubuntu-18.04, macos-10.15, windows-2022]
+        os: [ubuntu-18.04, macos-10.15]
+        config: ["--config bzlmod", ""]
+        include:
+          - os: ubuntu-18.04
+            short_os: linux
+          - os: macos-10.15
+            short_os: macos
+          #- os: windows-2022
+          #  short_os: windows
 
     steps:
       - uses: actions/checkout@v2
@@ -46,10 +59,11 @@ jobs:
           key: ${{ runner.os }}-bazel
 
       # TODO: Find out how to make bzlmod build with //distribution/...
-      - name: Test bzlmod
-        run: |
-          bazelisk test --config bzlmod //... --deleted_packages=distribution
+      -  run: |
+          cd examples/python_deps
 
-      - name: Build bzlmod
-        run: |
-          bazelisk build --config bzlmod //... --deleted_packages=distribution
+      - name: Run example
+        run: >
+          bazelisk --bazelrc ci.bazelrc run
+          @python_${{matrix.short_os}}//:bin/python3
+          ${{matrix.config}} -- -c 'print("hello from cipd")'
