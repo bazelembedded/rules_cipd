@@ -1,0 +1,30 @@
+module(
+    name = "rules_cipd_example",
+    version = "0.0.1",
+)
+
+bazel_dep(name = "rules_cipd", version = "0.0.1")
+
+cipd = use_extension("@rules_cipd//cipd/internal:cipd_modules.bzl", "cipd")
+
+cipd.package(
+    path = "infra/python/cpython3/linux-amd64",
+    id = "AeeBYkh7rr_sc3IQS1y5D5qzcdtq4yTTqJO6_SiYnvEC",
+)
+
+cipd.package(
+    path = "infra/python/cpython3/windows-amd64",
+    id = "jxpJoQueQw8Wuh1jacFbPkzQbv_V2t43p1FO-DQI2gYC",
+)
+
+cipd.package(
+    path = "infra/python/cpython3/mac-amd64",
+    id = "_HcVvC8YBmiLxrI0Q8Gc8AuuhJGci_BCf7kKeuuVEigC",
+)
+
+use_repo(
+    cipd,
+    python_linux = "cipd_infra_python_cpython3_linux_amd64",
+    python_macos = "cipd_infra_python_cpython3_mac_amd64",
+    python_windows = "cipd_infra_python_cpython3_windows_amd64",
+)
