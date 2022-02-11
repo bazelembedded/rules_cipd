@@ -1,4 +1,7 @@
 # rules_cipd
+
+[![CI](https://github.com/bazelembedded/rules_cipd/actions/workflows/main.yml/badge.svg)](https://github.com/bazelembedded/rules_cipd/actions/workflows/main.yml)
+
 A set of rules for interfacing with and downloading CIPD packages as Bazel
 repositories.
 
