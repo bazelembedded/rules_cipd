@@ -1,5 +1,5 @@
 # Bazel build
-bazel-*
+**/*bazel-*
 
 # Release artifacts
 temp
