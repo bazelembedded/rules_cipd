@@ -7,7 +7,7 @@ on:
       - master
 
 jobs:
-  build_embedded:
+  build_and_test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
