@@ -36,8 +36,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # TODO: Determine why this won't work with windows, github actions seems
-        # to ignore the double hyphen.
+        # TODO(#6): Determine why this won't work with windows, github actions
+        # seems to ignore the double hyphen. Then uncomment below.
         # os: [ubuntu-18.04, macos-10.15, windows-2022]
         os: [ubuntu-18.04, macos-10.15]
         config: ["--config bzlmod", ""]
